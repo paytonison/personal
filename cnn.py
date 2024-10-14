@@ -31,6 +31,13 @@ train_targets = [1 if i % 2 == 0 else 0 for i in range(1000)]  # Binary labels
 train_dataset = TextDataset(train_data, train_targets, vocab_size, seq_length)
 train_loader = DataLoader(dataset=train_dataset, batch_size=64, shuffle=True)
 
+test_data = [[1, 2, 3, 4, 5] * 20 for _ in range(1000)]  # Dummy sequences of word indices
+test_targets = [1 if i % 2 == 0 else 0 for i in range(1000)]  # Binary labels
+
+test_dataset = TextDataset(train_data, train_targets, vocab_size, seq_length)
+test_loader = DataLoader(dataset=train_dataset, batch_size=64, shuffle=True)
+
+
 # Define the CNN architecture for text classification
 class TextCNN(nn.Module):
     def __init__(self, vocab_size, embed_size, num_classes):
@@ -83,9 +90,9 @@ model = TextCNN(vocab_size, embed_size, num_classes)
 
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0459)
 
-num_epochs = 5
+num_epochs = 10
 for epoch in range(num_epochs):
     print(f"Epoch {epoch+1}/{num_epochs}")
     for batch_idx, (data, target) in enumerate(train_loader):
@@ -108,16 +115,23 @@ for epoch in range(num_epochs):
 
 model.eval()
 
+# Initialize variables to track performance
 correct = 0
 total = 0
 
+# Disable gradient calculation for evaluation
 with torch.no_grad():
-    for data, target in train_loader:
+    for data, target in test_loader:
+        # Forward pass: Get predictions
         outputs = model(data)
+        
+        # Get the predicted class (the one with the highest score)
         _, predicted = torch.max(outputs.data, 1)
+        
+        # Update total number of samples and correctly predicted samples
         total += target.size(0)
         correct += (predicted == target).sum().item()
 
-
+# Calculate accuracy
 accuracy = 100 * correct / total
-print(f'Accuracy: {accuracy:.2f}%')
+print(f'Test Accuracy: {accuracy:.2f}%')
