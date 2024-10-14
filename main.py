@@ -27,7 +27,6 @@ class NeuralNet(nn.Module):
         x = self.fc3(x)
         return x
 
-
 model = NeuralNet()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
@@ -44,3 +43,14 @@ for epoch in range(num_epochs):
 
         if batch_idx % 100 == 0:
             print(f'Epoch {epoch+1}/{num_epochs}, Step {batch_idx}/{len(train_loader)}, Loss: {loss.item():.4f}')
+
+model.eval()
+correct, total = 0, 0
+with torch.no_grad():
+    for data, target in test_loader:
+        outputs = model(data)
+        _, predicted = torch.max(outputs.data, 1)
+        total += target.size(0)
+        correct += (predicted == target).sum().item()
+
+print(f'Accuracy: {100*correct/total:.2f}%')
