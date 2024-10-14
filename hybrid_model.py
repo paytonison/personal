@@ -13,21 +13,32 @@ test_dataset = datasets.MNIST(root='./data', train=False, transform=transform, d
 train_loader = DataLoader(dataset=train_dataset, batch_size=64, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=64, shuffle=False)
 
-class NeuralNet(nn.Module):
+class ConvNet(nn.Module):
     def __init__(self):
-        super(NeuralNet, self).__init__()
-        self.fc1 = nn.Linear(28*28, 128)
+        super(ConvNet, self).__init__()
+        self.conv1 = nn.Conv2d(1, 16, 3, 1, 1)
+        self.conv2 = nn.Conv2d(16, 32, 3, 1, 1)
+
+        self.pool = nn.MaxPool2d(2, 2, 0)
+
+        self.fc1 = nn.Linear(32 * 7 * 7, 128)
         self.fc2 = nn.Linear(128, 64)
         self.fc3 = nn.Linear(64, 10)
 
     def forward(self, x):
-        x = x.view(-1, 28*28)
-        x = torch.tanh(self.fc1(x))
-        x = torch.tanh(self.fc2(x))
+        x = self.pool(torch.relu(self.conv1(x)))
+        x = self.pool(torch.relu(self.conv2(x)))
+
+        x = x.view(-1, 32 * 7 * 7)
+
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
         x = self.fc3(x)
+
         return x
 
-model = NeuralNet()
+
+model = ConvNet()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
