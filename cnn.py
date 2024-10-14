@@ -104,3 +104,20 @@ for epoch in range(num_epochs):
         # Print loss for every 100 batches
         if batch_idx % 100 == 0:
             print(f'Epoch {epoch+1}/{num_epochs}, Step {batch_idx}/{len(train_loader)}, Loss: {loss.item():.4f}')
+
+
+model.eval()
+
+correct = 0
+total = 0
+
+with torch.no_grad():
+    for data, target in train_loader:
+        outputs = model(data)
+        _, predicted = torch.max(outputs.data, 1)
+        total += target.size(0)
+        correct += (predicted == target).sum().item()
+
+
+accuracy = 100 * correct / total
+print(f'Accuracy: {accuracy:.2f}%')
