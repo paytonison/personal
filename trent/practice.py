@@ -21,7 +21,7 @@ def generate(f1, f2): # function to generate text
 
     messages = [ # messages
             {"role": "system", "content": f"You are an autonomous artificial intelligence agent tasked with writing every thought in your head. {f2.read()}"}, # meta system prompt that includes the data of the file
-            {"role": "user", "content": "Write."}, # user prompt to get things started
+            {"role": "user", "content": " "}, # user prompt to get things started
         ]
     
     outputs = generator(messages, max_new_tokens=256) # generating text using hf pipeline
