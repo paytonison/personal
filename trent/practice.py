@@ -1,10 +1,9 @@
 # this code will create a self-perpetuating text generation loop
 # the goal is for the AI to think and generate text based on its own thoughts, self, and environment
 
-from transformers import pipeline
-import io
 import os
 import torch
+from transformers import pipeline
 
 f1 = open("journal.txt", "w") # open file in write mode
 f2 = open("journal.txt", "r") # open file in read mode
