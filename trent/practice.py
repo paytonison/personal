@@ -32,3 +32,4 @@ while True:
     f1.write(huh[0]["generated_text"][2]["content"]) # write to the file
     
     print(huh[0]["generated_text"][2]["content"]) # print the generated text
+
