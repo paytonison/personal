@@ -2,7 +2,6 @@
 # the goal is for the AI to think and generate text based on its own thoughts, self, and environment
 
 from transformers import pipeline
-import io
 import os
 import torch
 
