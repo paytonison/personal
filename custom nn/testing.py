@@ -88,14 +88,11 @@ hidden_dim = 256
 output_dim = 1
 model = RNNTextClassifier(vocab_size, embed_dim, hidden_dim, output_dim).to(device)
 
-# Remove or comment out the line loading the previous state:
-# model.load_state_dict(torch.load('/Users/paytonison/personal git/custom nn/rnn_text_classifier.pth'))
-
 criterion = nn.BCELoss()
-optimizer = optim.SGD(model.parameters(), momentum=0.99, lr=0.00161)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Step 4: Training Loop
-num_epochs = 10
+num_epochs = 5
 for epoch in range(num_epochs):
     model.train()
     total_loss = 0
