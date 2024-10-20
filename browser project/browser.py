@@ -12,8 +12,8 @@ import re
 # driver = webdriver.Safari()
 
 pipe = pipeline(
-    "text-generation",
-    "meta-llama/Llama-3.2-1B-Instruct",
+"text-generation",
+"meta-llama/Llama-3.2-1B-Instruct",
     torch_dtype=torch.bfloat16,
     max_new_tokens=256
 )
@@ -21,12 +21,14 @@ pipe = pipeline(
 def action(pipe):
     messages = [
     {"role": "system", "content": '''
-            You are an autonomous web agent. 
-            Respond in a valid JSON format like: {action: action_type, query: some_query_or_url}\n'''},
-            {"role": "user", "content": "Search for something you like"}
+            You are an autonomous web agent. As you formulate your answer, create a chain of thought.\n 
+            Respond in a valid JSON format like: {action: action_type, query: some_query_or_url}\n
+            In your reponse, also include the website you are searching on in a similarly valid JSON format like: {website: website_url}'''},
+    {"role": "user", "content": "Search for something you like."}
     ]
     action = pipe(messages)
-    action = action[0]["generated_text"][-1]["content"]
-    print(action)
+    return action[0]["generated_text"][-1]["content"]
 
-action(pipe)
+
+bot_action = action(pipe)
+print(bot_action)

@@ -127,7 +127,7 @@ def train_dqn():
     gamma = 0.99
     epsilon = 0.4
     num_actions = 3
-    num_episodes = 1000
+    num_episodes = 100
 
     # Initialize LLaMA model, optimizer, and environment
     q_network = LLaMAQNetwork()
