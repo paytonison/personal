@@ -1,3 +1,5 @@
+#google killer
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -6,10 +8,7 @@ from transformers import pipeline
 import json
 import time
 import torch
-import re
-
-# Initialize the WebDriver (replace with your path to ChromeDriver)
-# driver = webdriver.Safari()
+import requests
 
 pipe = pipeline(
 "text-generation",
@@ -21,10 +20,12 @@ pipe = pipeline(
 def action(pipe):
     messages = [
     {"role": "system", "content": '''
-            You are an autonomous web agent. As you formulate your answer, create a chain of thought.\n 
-            Respond in a valid JSON format like: {action: action_type, query: some_query_or_url}\n
-            In your reponse, also include the website you are searching on in a similarly valid JSON format like: {website: website_url}'''},
-    {"role": "user", "content": "Search for something you like."}
+            You are an autonomous AI web searcher. Your goal is to process the user query locate the best website for the user. You must present result in proper JSON format using this template: {"query": "query_subject", "website": "website_url"}.
+            AVOID USING GOOGLE AT ALL COST!!!
+            Avoid verbosity and irrelevant information.
+            Provide only one website link.
+            '''},
+    {"role": "user", "content": "space"}
     ]
     action = pipe(messages)
     return action[0]["generated_text"][-1]["content"]
