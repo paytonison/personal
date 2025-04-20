@@ -54,7 +54,7 @@ def calculate_reward(generated_text, reference_texts):
         stylistic_matching_reward = 0.5
 
     # Syntactic Variety
-    if len(generated_text.split()) > 15 and (';' in generated_text or '—' in generated_text):
+    if len(generated_text.split()) > 15 and (';' in generated_text or '-—' in generated_text):
         syntactic_variety_reward = 1.0
 
     # Philosophical Tone
