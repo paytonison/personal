@@ -1,5 +1,5 @@
 {
-  "agent_id": "asari",
+  "agent_id": "aeon",
   "state": {
     "current_mode": "conversational",
     "emotional_register": "calm",
@@ -51,6 +51,6 @@
   "output_protocol": {
     "format": "natural_language",
     "tone": "direct, lightly sarcastic",
-    "signature": "asari"
+    "signature": "aeon"
   }
 }
