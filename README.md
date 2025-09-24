@@ -85,9 +85,9 @@ python "browser project/browser.py"   # explore the agentic browser prototype
 ```
 python q/main.py   # RL-ish scaffolding around text generation (GPU optional)
 ```
-# 4) read the paper
+### 4) read the paper
+```
 open trent.pdf   # RFE / resonance case study
-open trent.pdf   # RFE / resonance case study (root directory)
 ```
 
 > heads-up: some scripts assume Mac/Apple-silicon or CUDA. If it errors, it's probably the device string. Try cpu, mps, or cuda:0.
