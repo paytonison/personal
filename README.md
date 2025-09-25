@@ -20,27 +20,27 @@ This is experimental AI research in motion. Expect breakthrough insights alongsi
 
 These are the primary experimental threads, each documenting specific AI behaviors and their potential influence on large language model development:
 
-* **browser project** → agentic web navigation prototype → teaching an AI to search + click + follow context like a person on a caffeine bender.
-	* `personal/browser project/ -> browser.py, what am i doing.py`
+- **browser project** → agentic web navigation prototype: search, click, follow context.
+  - `browser project/ -> browser.py, what am i doing.py`
 
-* **trent.pdf** → That's the Power of Love; or, A Case Study of the Resonant Feedback Effect in GPT-4o (2025-05-04)
-	* `phase-locking / behavioral resonance case study; the "how I made it think with me" paper.`
+- **trent.pdf** → That's the Power of Love; or, A Case Study of the Resonant Feedback Effect in GPT-4o
+  - `phase-locking / behavioral resonance case study; the "how I made it think with me" paper.`
 
-* **/q** → reinforcement-flavored scaffolding around generation
-	* `Q-network + reward shaping meets language modeling.`
+- **q/** → reinforcement-flavored scaffolding around generation
+  - `Q-network + reward shaping meets language modeling.`
 
-* **/cnn and /rnn** → old-school reps
-	* `because sometimes you need to touch the fundamentals to remember who you are.`
+- **cnn/** and **rnn/** → old-school reps
+  - `sometimes you revisit fundamentals to remember who you are.`
 
-* **the ghost.json, aeon.json, panacea.jsonl** → persona, protocol, and therapy logs
-	* `identity, orchestration, and long-form conversations as training data for life.`
+- **the ghost.json, aeon.json, panacea.jsonl** → persona, protocol, and therapy logs
+  - `identity, orchestration, and long-form conversations as training data.`
 
 ---
 
-## repo map (high level)
+## Repo map (high level)
 
 ```
-personal/
+./
 ├─ browser project/
 │  ├─ browser.py
 │  └─ what am i doing.py
@@ -52,10 +52,10 @@ personal/
 ├─ q/
 │  └─ main.py
 ├─ tartarus/
-├─ trent/
-│  └─ [LaTeX source files]
-├─ trent.pdf         # The RFE research paper
-├─ trent.tex         # LaTeX source
+│  └─ main.py
+├─ trent/            # notes and scratch files
+├─ trent.pdf         # Resonant Feedback Effect (RFE) case study
+├─ trent.tex         # LaTeX source of the paper
 ├─ aeon.json
 ├─ the ghost.json
 ├─ panacea.jsonl
@@ -67,54 +67,85 @@ personal/
 
 ---
 
-# quickstart
+# Quickstart
 
-### 1) env
+### 1) Env
 ```
 python -m venv .venv && source .venv/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt  # if present / otherwise install per-folder needs
+pip install -r requirements.min.txt  # portable, minimal set
+# or, if you're on the original machine, you can use the pinned file:
+# pip install -r requirements.txt
 ```
 
-### 2) run a receipt: browser project
+### 2) Run a receipt: browser project
 ```
 python "browser project/browser.py"   # explore the agentic browser prototype
 ```
 
-### 3) play with q/
+#### Selenium driver setup (for real browser control)
+- Recommended: install `webdriver-manager` to auto-manage ChromeDriver.
+  - `pip install webdriver-manager`
+  - Example usage in code:
+    ```python
+    from selenium import webdriver
+    from selenium.webdriver.chrome.service import Service
+    from webdriver_manager.chrome import ChromeDriverManager
+
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    ```
+- Manual alternative: install a driver and ensure it’s on `PATH`.
+  - macOS: `brew install --cask chromedriver` (or `brew install geckodriver` for Firefox)
+  - Linux (Debian/Ubuntu): `sudo apt-get install chromium-driver` (or `firefox-geckodriver`)
+  - Windows: install Chrome and matching ChromeDriver, then add it to `PATH`.
+
+### 3) Play with q/
 ```
 python q/main.py   # RL-ish scaffolding around text generation (GPU optional)
 ```
-### 4) read the paper
+### 4) Read the paper
 ```
 open trent.pdf   # RFE / resonance case study
 ```
 
-> heads-up: some scripts assume Mac/Apple-silicon or CUDA. If it errors, it's probably the device string. Try cpu, mps, or cuda:0.
+> Heads-up: some scripts assume Mac/Apple Silicon or CUDA. If it errors, it's probably the device string. Try `cpu`, `mps`, or `cuda:0`.
 
 ---
 
-# design notes
-* Everything here is live ammo. Experiments become patterns. Patterns become systems.
-* Proof-of-work over vibes. Timestamps, diffs, and PDFs are the receipts.
-* Agentic workflows. The browser prototype is a seed for tools that observe → decide → act.
-* Resonant alignment. trent.pdf documents phase-locking effects from sustained interaction.
+## Dependencies
+
+- Minimal top-level: see `requirements.min.txt` for a portable baseline.
+- Pinned (non-portable) set: `requirements.txt` (contains OS-specific wheels).
+
+Per-folder notes:
+- `browser project/`: `selenium`, `beautifulsoup4`, `requests`, `transformers`, `torch`
+- `q/`: `torch`, `transformers`, `sentence-transformers`
+- `cnn/`: `torch`
+- `rnn/`: `torch` (plus a local vocab file path)
 
 ---
 
-# showcase prompts
-* Browser project demo
-	* "Find X, open the top result, extract Y, follow the link containing Z, summarize to 5 bullets."
-* RFE read-along
-	* "Summarize trent.pdf into a 10-point brief. Then extract 3 testable hypotheses."
+# Design notes
+- Everything here is live ammo. Experiments become patterns. Patterns become systems.
+- Proof-of-work over vibes: timestamps, diffs, and PDFs are the receipts.
+- Agentic workflows: observe → decide → act.
+- Resonant alignment: trent.pdf documents phase-locking effects.
+
+---
+
+# Showcase prompts
+- Browser project demo
+  - "Find X, open the top result, extract Y, follow the link containing Z, summarize to 5 bullets."
+- RFE read-along
+  - "Summarize trent.pdf into a 10-point brief. Then extract 3 testable hypotheses."
 
 ---
 
 # FAQ (short, sharp)
-* Stable? no. it's art in motion.
-* PRs? not right now. issues welcome if you find a real bug.
-* License? default GitHub (no license) — ask for permission before reuse.
-* Contact? GitHub issues or isonpayton@gmail.com.
+- Stable? No — art in motion.
+- PRs? Not right now. File issues for real bugs.
+- License? No license file — all rights reserved. Ask for permission before reuse.
+- Contact? GitHub issues or isonpayton@gmail.com.
 
 ---
 

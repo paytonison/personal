@@ -1,0 +1,6 @@
+torch
+transformers
+sentence-transformers
+selenium
+beautifulsoup4
+requests
